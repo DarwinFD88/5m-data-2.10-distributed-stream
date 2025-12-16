@@ -42,7 +42,10 @@ parsed_df = pizza_df.select("timestamp", from_json(col("value").cast("string"), 
 Answer:
 
 ```python
+from pyspark.sql.functions import size, avg, col
 
+# Group by shop and calculate the average size of the pizzas array
+parsed_df.groupBy("value.shop").agg(avg(size(col("value.pizzas"))).alias("average_pizzas")).show(truncate=False)
 ```
 
 ## Submission
